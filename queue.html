@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	var queue = [];
+	var size=0;
+</script>
+
+	<title></title>
+</head>
+<body>
+<br><br><br>	
+<center><h2>Queue Simulation</h2>
+<div class="container" style="width:70%">
+<br><br> Enter the size of Queue: <input type="text" id="num1"/><input type="button" class = "btn btn-primary btn-sm" onclick="setsize()" value="Set Size"/>
+<br><br>
+Enter the number to Add to Queue: <input type="text" id="num2"/><input type="button" class = "btn btn-primary btn-sm" onclick="queuepush()" value="Enqueue"/>
+<br><br><input type="button" class = "btn btn-primary btn-sm" onclick="queuepop()" value="Dequeue"/>
+<br><br>Queue :<div id="queue" style="overflow-x:auto;"></div>
+<br><br><input type="button" class = "btn btn-primary btn-sm" onclick="isempty()" value="Call IsEmpty Function"/>
+<br><br><input type="button" class = "btn btn-primary btn-sm" onclick="isfull()" value="Call IsFull Function"/>
+<br><br><input type="button" class = "btn btn-primary btn-sm" onclick="front()" value="Display Front"/>
+<br><br><input type="button" class = "btn btn-primary btn-sm" onclick="rear()" value="Display Rear"/>
+<br><br><font size=6><div id="message"></div></font><br><br>
+</center>
+
+</div>
+
+</body>
+<script type="text/javascript">
+function isempty()
+{
+	var l=queue.length;
+	if(l==0)document.getElementById("message").innerHTML="<span class='label label-success'>Queue is Empty</span>";
+	else document.getElementById("message").innerHTML="<span class='label label-warning'>Queue is Not Empty</span>";
+}
+
+function isfull()
+{
+	var l=queue.length;
+	if(size==0) document.getElementById("message").innerHTML="<span class='label label-warning'>The Size is Zero</span>";
+	else
+	{
+		if(l==size)document.getElementById("message").innerHTML="<span class='label label-success'>Queue is Full</span>";
+		else document.getElementById("message").innerHTML="<span class='label label-warning'>Queue is Not Full</span>";
+	}	
+}
+
+function setsize()
+{
+	var q=parseInt(document.getElementById("num1").value);
+	if(isNaN(q))document.getElementById("message").innerHTML="<span class='label label-warning'>Please Enter Valid Number</span>";
+	else
+	{
+		size=q;
+		document.getElementById("message").innerHTML="<span class='label label-success'>Queue Size Set to "+size.toString()+"</span>";
+	}
+}
+
+function front()
+{
+	l=queue.length;
+	if(l==0)document.getElementById("message").innerHTML="<span class='label label-danger'>Queue is Empty, No Front Element</span>";
+	else 
+	document.getElementById("message").innerHTML="<span class='label label-success'>The Front Element is "+queue[0].toString()+"</span>";
+}
+
+function rear()
+{
+	l=queue.length;
+	if(l==0)document.getElementById("message").innerHTML="<span class='label label-danger'>Queue is Empty, No Rear Element</span>";
+	else 
+	document.getElementById("message").innerHTML="<span class='label label-success'>The Rear Element is "+queue[l-1].toString()+"</span>";
+}
+
+function queuepush()
+{
+	var q=parseInt(document.getElementById("num2").value);
+	// alert(q);
+	if(isNaN(q))document.getElementById("message").innerHTML="<span class='label label-warning'>Please Enter Valid Number</span>";
+	else
+	{
+		var l=queue.length;
+		// alert(l);
+		if(size==0)document.getElementById("message").innerHTML="<span class='label label-danger'>Please Specify a Size</span>";
+		else
+		{
+			if(l==size)document.getElementById("message").innerHTML="<span class='label label-danger'>The Queue Is Full</span>";
+			else
+			{
+				queue.push(q);       // stack is now [2]
+				l=queue.length;
+				var htmlcode="<table border=5 cellspacing='10' bordercolor=grey id='queue'><tr>";
+				for(var r=0;r<l;r++)
+				{
+					htmlcode+="<td style='padding: 10px' bgcolor='black'><font color='white'>"+queue[r].toString()+"</font></td>";
+				}
+				htmlcode+="</tr></table>";
+				// document.write(htmlcode);
+				document.getElementById("queue").innerHTML=htmlcode;
+			}
+		}
+	}
+}
+function queuepop()
+{
+	if(size==0)document.getElementById("message").innerHTML="<span class='label label-danger'>No Elements in Queue</span>";
+	else
+	{
+		var i = queue.shift(); 
+		var l=queue.length;
+		var htmlcode="<table border=5 cellpadding='10' bordercolor=grey id='queue'><tr>";
+		for(var r=0;r<l;r++)
+		{
+			htmlcode+="<td style='padding: 10px' bgcolor='black'><font color='white'>"+queue[r].toString()+"</font></td>";
+		}
+		htmlcode+="</tr></table>";
+		// document.write(htmlcode);
+		document.getElementById("queue").innerHTML=htmlcode;
+	}
+}
+// document.getElementById("result").innerHTML=stack;
+
+</script>
+</html>
